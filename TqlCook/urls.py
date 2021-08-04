@@ -15,6 +15,6 @@ urlpatterns = [
     path('index/', views.home, name='home'),
     path('search/', views.searchResult, name='searchResult'),
     path('category/', views.category, name='category'),
-    path('recipe/', views.recipe, name='recipe'),
+    path('recipe/<int:recipe_id>', views.recipe, name='recipe'),
     path('auth/', views.auth, name='auth'),
 ]

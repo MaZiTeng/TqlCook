@@ -8,8 +8,8 @@ class UserProfile(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
     password = models.CharField(max_length=128)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
-    api = models.CharField(max_length=256)
+    picture = models.ImageField(upload_to='profile_images', null=True)
+    api = models.CharField(max_length=256, null=True)
     auth = models.IntegerField()  # 权限
     last_access_time = models.DateTimeField()
 
@@ -22,10 +22,9 @@ class Category(models.Model):
 class Recipe(models.Model):
     id = models.IntegerField(default=2000, auto_created=1, primary_key=True)
     name = models.CharField(max_length=128)
-    time = models.DateField()
+    time = models.DateField(null = True)
     ingredient = models.TextField()
     method = models.TextField()
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     views = models.IntegerField(default=0)
     images = models.TextField()
 
