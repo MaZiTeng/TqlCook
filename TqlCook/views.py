@@ -1,5 +1,11 @@
 from django.shortcuts import render
 from TqlCook.models import Recipe, Like
+from django.contrib.auth.decorators import login_required
+from TqlCook.forms import UserForm, UserProfileForm
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
+from django.urls import reverse
+from django.shortcuts import redirect
 
 
 def home(request):
@@ -19,9 +25,10 @@ def category(request):
 
 
 def recipe(request, recipe_id):
-    selectedRecipe = Recipe.objects.get(id=recipe_id)
+    selectedRecipe = Recipe.objects.get(pk=recipe_id)
     mostViewedRecipes = Recipe.objects.order_by('?')[:3]
-    likes = Like.objects.get(recipe_id_id=recipe_id).count()
+    likes = Like.objects.filter(recipe_id_id=recipe_id).count()
+    # is_like = Like.objects.get(recipe_id_id=recipe_id, user_id_id=user_id)
     context_dict = {}
     # 菜谱
     context_dict['recipe'] = selectedRecipe
@@ -29,9 +36,63 @@ def recipe(request, recipe_id):
     context_dict['recipes'] = mostViewedRecipes
     # 点赞
     context_dict['likes'] = likes
+    # 本人点赞
+    # context_dict['is_like'] =
 
     return render(request, 'recipe.html', context_dict)
 
 
 def auth(request):
     return render(request, 'auth.html')
+
+
+def register(request):
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+
+            profile.save()
+            registered = True
+
+        else:
+            print(user_form.errors, profile_form.errors)
+    else:
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+
+    return render(request, 'TqlCook/home', context={       # 链接到主页
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'registered': registered
+    })
+
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+
+                return redirect(reverse('rango:index')) # 链接到主页
+            else:
+                return HttpResponse("Your Rango account is disabled.")  # 链接登录页面
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")  # 链接登录页面
+    else:
+        return render(request, 'rango/login.html')   # 链接登录页面

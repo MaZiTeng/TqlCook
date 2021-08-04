@@ -5,12 +5,12 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     id = models.IntegerField(default=0, auto_created=1, primary_key=True)
-    # user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=64)
-    password = models.CharField(max_length=128)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # name = models.CharField(max_length=64)
+    # password = models.CharField(max_length=128)
     picture = models.ImageField(upload_to='profile_images', null=True)
     api = models.CharField(max_length=256, null=True)
-    auth = models.IntegerField()  # 权限
+    auth = models.IntegerField(default=1)  # 权限
     last_access_time = models.DateTimeField()
 
 
@@ -22,7 +22,7 @@ class Category(models.Model):
 class Recipe(models.Model):
     id = models.IntegerField(default=2000, auto_created=1, primary_key=True)
     name = models.CharField(max_length=128)
-    time = models.DateField(null = True)
+    time = models.DateField(null=True)
     ingredient = models.TextField()
     method = models.TextField()
     views = models.IntegerField(default=0)
