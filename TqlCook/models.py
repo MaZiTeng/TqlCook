@@ -10,8 +10,6 @@ class UserProfile(models.Model):
     # password = models.CharField(max_length=128)
     picture = models.ImageField(upload_to='profile_images', null=True)
     api = models.CharField(max_length=256, null=True)
-    auth = models.IntegerField(default=1)  # 权限
-    last_access_time = models.DateTimeField()
 
 
 class Category(models.Model):

@@ -9,7 +9,7 @@
 from django.urls import path
 from TqlCook import views
 
-
+app_name = 'TqlCook'
 
 urlpatterns = [
     path('index/', views.home, name='home'),
