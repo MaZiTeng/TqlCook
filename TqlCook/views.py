@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from TqlCook.models import Recipe, Like, UserProfile, User
+from TqlCook.models import Recipe, Like, UserProfile, Comment
 from django.contrib.auth.decorators import login_required
-from TqlCook.forms import UserForm, UserProfileForm
+from TqlCook.forms import UserForm, UserProfileForm, CommentForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.urls import reverse
@@ -26,15 +26,21 @@ def category(request):
 
 
 def recipe(request, recipe_id):
+    request.session['recipe_id'] = recipe_id
     selectedRecipe = Recipe.objects.get(pk=recipe_id)
     mostViewedRecipes = Recipe.objects.order_by('?')[:3]
     likes = Like.objects.filter(recipe_id_id=recipe_id).count()
 
     # 判断当前用户是否点赞
     is_like = False
-    user_id = int(get_server_side_cookie(request, 'user_id', -1))
+    user_id = int(get_server_side_cookie(request, 'user_id', '-1'))
     if Like.objects.filter(recipe_id_id=selectedRecipe.id, user_id_id=user_id).exists():
         is_like = True
+
+    commentsTem = Comment.objects.filter(recipe_id_id=selectedRecipe.id)
+    comments = []
+    for i in commentsTem:
+        comments.append([i.content, UserProfile.objects.get(id=i.user_id).user.username])
 
     context_dict = {}
     # 菜谱
@@ -45,6 +51,8 @@ def recipe(request, recipe_id):
     context_dict['likes'] = likes
     # 本人点赞
     context_dict['is_like'] = is_like
+    # 评论
+    context_dict['comments'] = comments
 
     #   数据库中view+1
     selectedRecipe.views += 1
@@ -120,3 +128,21 @@ def get_server_side_cookie(request, cookie, default_val=None):
     if not val:
         val = default_val
     return val
+
+
+@login_required
+def add_comment(request):
+    user_id = int(get_server_side_cookie(request, 'user_id', '-1'))
+    recipe_id = int(get_server_side_cookie(request, 'recipe_id', '-1'))
+    # form = CommentForm(instance=user_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.recipe_id_id = recipe_id
+            form.user_id_id = user_id
+            form.save(commit=True)
+            return redirect(request.get_full_path())
+        else:
+            print(form.errors)
+    return redirect(request.get_full_path())

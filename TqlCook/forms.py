@@ -8,7 +8,7 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from TqlCook.models import UserProfile
+from TqlCook.models import UserProfile, Comment
 
 
 class UserForm(forms.ModelForm):
@@ -23,3 +23,14 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('picture',)
+
+
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(max_length=128, help_text="Please enter the content.")
+    recipe_id_id = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    user_id_id = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+
+    class Meta:
+        model = Comment
+        fields = ('content',)
+
