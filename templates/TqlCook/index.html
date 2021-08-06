@@ -1,0 +1,192 @@
+{% extends 'TqlCook/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Homepage
+{% endblock %}
+
+{% block body_block %}
+    <div class="page-outer">
+        <!--begin of page-container-->
+        <div class="page-container">
+            <div class="pure-g">
+                <div class="pure-u-2-3 main-panel">
+                    <div class="pure-g">
+                        <!-- left panel -->
+                        <div class="left-panel">
+                            <ul class="plain homepage-cats">
+                                <li class="homepage-cat-has-submenu homepage-cat0">
+                                    <a class="homepage-cat-name" href="/category/1/">
+                                        <i class="cat-icon"></i>
+                                        <span class="cat-name">Everyday and Easy</span>
+                                    </a>
+                                </li>
+
+                                <li class="homepage-cat-has-submenu homepage-cat3">
+                                    <a class="homepage-cat-name" href="/category/2/">
+                                        <i class="cat-icon"></i>
+                                        <span class="cat-name">Fast food</span>
+                                    </a>
+                                </li>
+                                <li class="homepage-cat-has-submenu homepage-cat4">
+                                    <a class="homepage-cat-name" href="/category/3/">
+                                        <i class="cat-icon"></i>
+                                        <span class="cat-name">Meat</span>
+                                        <i class="icon icon-cat-arrow"></i>
+                                    </a>
+                                </li>
+                                <li class="homepage-cat-has-submenu homepage-cat5">
+                                    <a class="homepage-cat-name" href="/category/4/">
+                                        <i class="cat-icon"></i>
+                                        <span class="cat-name">Fish</span>
+                                    </a>
+                                </li>
+                                <li class="homepage-cat-has-submenu homepage-cat6">
+                                    <a class="homepage-cat-name" href="/category/5">
+                                        <i class="cat-icon"></i>
+                                        <span class="cat-name">Vegetable</span>
+                                        <i class="icon icon-cat-arrow"></i>
+                                    </a>
+                                </li>
+                                <li class="homepage-cat-has-submenu homepage-cat8">
+                                    <a class="homepage-cat-name" href="/category/6">
+                                        <i class="cat-icon"></i>
+                                        <span class="cat-name">Soup</span>
+                                        <i class="icon icon-cat-arrow"></i>
+                                    </a>
+                                </li>
+                                <li class="homepage-cat-has-submenu homepage-cat9">
+                                    <a class="homepage-cat-name" href="/category/7">
+                                        <i class="cat-icon"></i>
+                                        <span class="cat-name">Baking</span>
+                                        <i class="icon icon-cat-arrow"></i>
+                                    </a>
+                                </li>
+                                <li class="homepage-cat-has-submenu homepage-cat12">
+                                    <a class="homepage-cat-name" href="/category/8">
+                                        <i class="cat-icon"></i>
+                                        <span class="cat-name">Vegetarian</span>
+                                        <i class="icon icon-cat-arrow"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- end of left panel -->
+
+                        <!-- middle panel -->
+                        <div class="middle-panel">
+
+                            <!-- head line -->
+                            <div class="headline">
+                                <div class="unslider headline-slider">
+                                    <ul>
+                                        {% for recipe in recipes %}
+                                            <li class="headline-recipe">
+                                                <a class="cover-image display-block" href="/recipe/104155950/"
+                                                   title={{ recipe.name }} alt={{ recipe.name }}
+                                                   style="background-image: url(); -ms-filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=https://i2.chuimg.com/31bec27de1844e118aa53271445845c8_1079w_1177h.jpg?imageView2/1/w/490/h/260/interlace/1/q/90, sizingMethod=scale)';">
+                                                    <img src="{{ recipe.images }}"
+                                                         alt={{ recipe.name }} width="490" height="260"
+                                                         class="invisible">
+                                                </a>
+                                                <a href="/recipe/{{ recipe.id }}" class="name">{{ recipe.name }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- end of head line -->
+
+                            <!-- most viewed recipes -->
+                            <div class="pop-recipes block">
+                                <div class="title-bar">
+                                    <h3 class="title">Most Viewed Recipes</h3>
+                                </div>
+                                <ul class="plain">
+                                    {% for recipe in recipes %}
+                                        <li>
+                                            <div title="{{ recipe.name }}"
+                                                 class="recipe image-link align-center has-border display-block">
+                                                <a class="cover" href="/recipe/{{ recipe.id }}">
+                                                    <img src="" alt="" width="235" height="138">
+                                                </a>
+                                                <div class="name font18">
+                                                    <a class="ellipsis" href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a>
+                                                </div>
+                                                <div class="stats">
+                                                    <span>{{ recipe.views }}&nbsp;views</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <!-- end of most viewed recipes -->
+
+                        </div>
+                        <!-- end of middle panel -->
+                    </div>
+
+
+                </div>
+                <!-- end of main panel -->
+
+                <!-- right panel -->
+                <div class="pure-u-1-3 right-panel">
+                    <div class="user-info">
+                        <div class="login">
+                            <ul class="plain">
+                                <li><a href="/social/?connect_type=qzone" class="button small-button">Log in with
+                                    Facebook</a></li>
+                                <li><a href="/social/?connect_type=weibo" class="button small-button">Log in with
+                                    Twitter</a></li>
+                                {#          <li><a href="/social/?connect_type=weibo" class="button small-button"><i class="login-icon login-icon-weibo" rel="nofollow"></i>Log in with Twitter</a></li>#}
+                                <li><a href="/social/?connect_type=facebook" class="button small-button">Log in with
+                                    GOOGLE</a></li>
+                            </ul>
+                            <a href="/auth/login/" rel="nofollow">Log in</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                                href="/auth/apply/" rel="nofollow">Register</a>
+                        </div>
+                    </div>
+                    <!-- end of user info -->
+                </div>
+                <!-- end of right panel -->
+            </div>
+
+        </div>
+        <!-- end of page-container -->
+    </div>
+
+
+    <div class="footer-outer">
+        <div class="footer-container">
+            <div>
+                <div>
+                    <a href="/post/7169/" target="_blank" title="about us" rel="nofollow">about us</a>
+                </div>
+                <div class="pure-u-1-4 align-right">
+                    <div class="social-likes">
+                        <a href="https://weibo.com/tql_cook" target="_blank" rel="nofollow">
+                            <img src="https://s.chuimg.com/simpleicons/sinaweibo.svg" alt="Weibo" title="Weibo">
+                        </a>
+                        &nbsp;
+                        <a href="https://twitter.com/tql_cook" target="_blank" rel="nofollow">
+                            <img src="https://s.chuimg.com/simpleicons/twitter.svg" alt="Twitter" title="Twitter">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pure-g">
+                <div class="pure-u-3-4">
+                    Copyright &copy; TqlCook &nbsp;
+                    <br>
+                    Contact us: (+44)xxxxxxxxxx &nbsp;
+                    email: tqlcook@gla.ac.uk &nbsp;
+                </div>
+                <div class="pure-u-1-4 align-right">
+                    You must not betray love, as well as delicious food!
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

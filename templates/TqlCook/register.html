@@ -1,38 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>register</title>
+{% extends 'TqlCook/base.html' %}
+{% load static %}
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/signin.css">
-</head>
-<body>
+{% block title_block %}
+    Register
+{% endblock %}
 
-<div class="container">
+{% block body_block %}
+    <div class="topbar-outer has-bottom-border">
+        <div class="topbar-container">
+            <div class="topbar">
 
-    <form id="register_form" method="post" action="{% url 'TqlCook:register' %}"novalidate>
-        <h2 class="form-signin-heading">Please register</h2>
-        <label for="inputUserId" class="sr-only">User Id</label>
-        <input type="text" name="userId" id="inputUserId" class="form-control" placeholder="User Id" required="" autofocus="">
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="user" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="Password" required="">
-        <label for="inputPasswordAgain" class="sr-only">PasswordAgain</label>
-        <input type="password" name="pwdAgain" id="inputPasswordAgain" class="form-control" placeholder="Enter Password Again" required="">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
+                <div class="pure-g">
+                    <div class="pure-u-1-6">
+                        <a href="/" class="logo">TqlCook</a>
+                    </div>
+                    <div class="pure-u-2-3">&nbsp;</div>
+                    <div class="pure-u-1-6 site-nav align-right">Registered?&nbsp;<a href="{% url 'TqlCook:login' %}">Login</a>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-    </form>
-
-</div> <!-- /container -->
-
-
-</body>
-</html>
+    </div>
+    <div class="page-outer">
+    <!--begin of page-container-->
+        <div class="page-container">
+            <div class="container">
+                <form id="register_form" method="post" action="{% url 'TqlCook:register' %}"novalidate>
+                    <h2 class="form-signin-heading">Please register</h2>
+                    <label for="inputUserId" class="sr-only">User Id</label>
+                    <input type="text" name="userId" id="inputUserId" class="form-control" placeholder="User Id" required="" autofocus="">
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="email" name="user" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="Password" required="">
+                    <label for="inputPasswordAgain" class="sr-only">PasswordAgain</label>
+                    <input type="password" name="pwdAgain" id="inputPasswordAgain" class="form-control" placeholder="Enter Password Again" required="">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                </form>
+            </div> <!-- /container -->
+        </div>
+      <!-- end of page-container -->
+    </div>
+{% endblock %}

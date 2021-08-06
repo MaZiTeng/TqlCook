@@ -14,11 +14,11 @@ def index(request):
     mostViewedRecipes = Recipe.objects.order_by('-views')[:6]
     context_dict = {}
     context_dict['recipes'] = mostViewedRecipes
-    return render(request, 'index.html', context_dict)
+    return render(request, 'TqlCook/index.html', context_dict)
 
 
 def searchResult(request):
-    return render(request, 'search.html')
+    return render(request, 'TqlCook/search.html')
 
 
 def category(request, category_id):
@@ -28,7 +28,7 @@ def category(request, category_id):
         recipes.append(Recipe.objects.get(pk=recipe.recipe_id_id))
     context_dict = {}
     context_dict['recipes'] = recipes
-    return render(request, 'category.html', context_dict)
+    return render(request, 'TqlCook/category.html', context_dict)
 
 
 def recipe(request, recipe_id):
@@ -65,11 +65,11 @@ def recipe(request, recipe_id):
 
     #   数据库中view+1
     selectedRecipe.views += 1
-    return render(request, 'recipe.html', context_dict)
+    return render(request, 'TqlCook/recipe.html', context_dict)
 
 
-def auth(request):
-    return render(request, 'auth.html')
+# def auth(request):
+#     return render(request, 'TqlCook/auth.html')
 
 
 def register(request):
@@ -98,7 +98,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'TqlCook/home.html', context={  # 链接到主页
+    return render(request, 'TqlCook/index.html', context={  # 链接到主页
         'user_form': user_form,
         'profile_form': profile_form,
         'registered': registered
@@ -114,21 +114,21 @@ def user_login(request):
             if user.is_active:
                 login(request, user)
                 request.session['user_id'] = UserProfile.user.id
-                return redirect(reverse('TqlCook/home.html'))  # 链接到主页
+                return redirect(reverse('TqlCook/index.html'))  # 链接到主页
             else:
                 print("非活跃用户")
-                return render(request, 'TqlCook/auth/sighin.html')  # 链接登录页面
+                return render(request, 'TqlCook/login.html')  # 链接登录页面
         else:
             print(f"Invalid login details: {username}, {password}")
-            return render(request, 'TqlCook/auth/sighin.html')  # 链接登录页面
+            return render(request, 'TqlCook/login.html')  # 链接登录页面
     else:
-        return render(request, 'TqlCook/auth/sighin.html')  # 链接登录页面
+        return render(request, 'TqlCook/login.html')  # 链接登录页面
 
 
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('TqlCook/home.html'))
+    return redirect(reverse('TqlCook/index.html'))
 
 
 # 从服务器获取数据
