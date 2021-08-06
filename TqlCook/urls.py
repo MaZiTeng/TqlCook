@@ -16,7 +16,7 @@ urlpatterns = [
     path('search/', views.searchResult, name='searchResult'),
     path('category/<int:category_id>/', views.category, name='category'),
     path('recipe/<int:recipe_id>/', views.recipe, name='recipe'),
-    path('auth/', views.auth, name='auth'),
+    # path('auth/', views.auth, name='auth'),
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
 ]

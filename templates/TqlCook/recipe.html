@@ -36,11 +36,11 @@
                             {{ recipe.name }}
                         </h1>
                         <div class="block recipe-show">
-                            <div class="cover image expandable block-negative-margin"
-                                 style="background-image: url(https://i2.chuimg.com/cee10d9a38054a3384264fa00a53ab1d_1920w_1920h.jpg?imageView2/2/w/660/interlace/1/q/90)">
-                                <img src="{{ recipe.images }}"
+{#                            <div class="cover image expandable block-negative-margin"#}
+{#                                 style="background-image: url(https://i2.chuimg.com/cee10d9a38054a3384264fa00a53ab1d_1920w_1920h.jpg?imageView2/2/w/660/interlace/1/q/90)">#}
+                                <img src="/{{ recipe.images }}"
                                      alt="Method" width="660">
-                            </div>
+{#                            </div>#}
                             <div class="container pos-r pb20 has-bottom-border">
                                 <div class="stats clearfix">
                                     <div class="cooked float-left">
@@ -60,10 +60,10 @@
                             </div>
                             <div class="rate-dialog block-negative-margin"></div>
                             <h2>Ingredients &nbsp;</h2>
-                            <div>{{ recipe.ingredient }}</div>
+                            <div>{{ recipe.ingredient|safe }}</div>
 
                             <h2 id="steps">Method &nbsp;</h2>
-                            <div>{{ recipe.method }}</div>
+                            <div>{{ recipe.method|safe }}</div>
                         </div>
                     </div>
                     <!-- end of recipe -->
