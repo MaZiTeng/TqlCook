@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time : 2021/8/1 11:46 下午
 # @Author : mzt
-# @Site : 
+# @Site :
 # @File : urls.py
 # @Software: PyCharm
 
@@ -17,4 +17,6 @@ urlpatterns = [
     path('category/', views.category, name='category'),
     path('recipe/<int:recipe_id>', views.recipe, name='recipe'),
     path('auth/', views.auth, name='auth'),
+    path('register/', views.register, name='register'),
+    path('login/', views.user_login, name='login'),
 ]

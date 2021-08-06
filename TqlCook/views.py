@@ -13,15 +13,15 @@ def home(request):
     mostViewedRecipes = Recipe.objects.order_by('-views')[:6]
     context_dict = {}
     context_dict['recipes'] = mostViewedRecipes
-    return render(request, 'home.html', context_dict)
+    return render(request, 'TqlCook/home.html', context_dict)
 
 
 def searchResult(request):
-    return render(request, 'search.html')
+    return render(request, 'TqlCook/search.html')
 
 
 def category(request):
-    return render(request, 'category.html')
+    return render(request, 'TqlCook/category.html')
 
 
 def recipe(request, recipe_id):
@@ -39,11 +39,11 @@ def recipe(request, recipe_id):
     # 本人点赞
     # context_dict['is_like'] =
 
-    return render(request, 'recipe.html', context_dict)
+    return render(request, 'TqlCook/recipe.html', context_dict)
 
 
 def auth(request):
-    return render(request, 'auth.html')
+    return render(request, 'TqlCook/auth.html')
 
 
 def register(request):
