@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from TqlCook.models import Recipe, Like, UserProfile, Comment
+from TqlCook.models import Recipe, Like, UserProfile, Comment, User, RecipeCategory
 from django.contrib.auth.decorators import login_required
 from TqlCook.forms import UserForm, UserProfileForm, CommentForm
 from django.contrib.auth import authenticate, login, logout
@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 from datetime import datetime
 
 
-def home(request):
+def index(request):
     # bing搜索没做，等着吧
     mostViewedRecipes = Recipe.objects.order_by('-views')[:6]
     context_dict = {}
@@ -21,8 +21,14 @@ def searchResult(request):
     return render(request, 'search.html')
 
 
-def category(request):
-    return render(request, 'category.html')
+def category(request, category_id):
+    recipeList = RecipeCategory.objects.filter(category_id_id=category_id)
+    recipes = []
+    for recipe in recipeList:
+        recipes.append(Recipe.objects.get(pk=recipe.recipe_id_id))
+    context_dict = {}
+    context_dict['recipes'] = recipes
+    return render(request, 'category.html', context_dict)
 
 
 def recipe(request, recipe_id):
@@ -40,7 +46,10 @@ def recipe(request, recipe_id):
     commentsTem = Comment.objects.filter(recipe_id_id=selectedRecipe.id)
     comments = []
     for i in commentsTem:
-        comments.append([i.content, UserProfile.objects.get(id=i.user_id).user.username])
+        print(i.user_id_id)
+        print(UserProfile.objects.get(pk=0))
+
+        comments.append([i.content, User.objects.get(pk=0)])
 
     context_dict = {}
     # 菜谱

@@ -12,7 +12,7 @@ from TqlCook import views
 app_name = 'TqlCook'
 
 urlpatterns = [
-    path('index/', views.home, name='home'),
+    path('index/', views.index, name='home'),
     path('search/', views.searchResult, name='searchResult'),
     path('category/', views.category, name='category'),
     path('recipe/<int:recipe_id>', views.recipe, name='recipe'),
